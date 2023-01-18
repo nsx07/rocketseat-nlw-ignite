@@ -10,10 +10,50 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+generator erd {
+  provider = "prisma-erd-generator"
+}
+
 model Habit {
-  id String @id @default(uuid())
-  title String
-  created_at DateTime
+  id            String          @id @default(uuid())
+  title         String
+  created_at    DateTime
+  DayHabits     DayHabit[]
+  weekDays HabitWeekDays[]
 
   @@map("habits")
+}
+
+model HabitWeekDays {
+  id String @id @default(uuid())
+
+  habit_id String
+  week_day Int
+
+  habit   Habit  @relation(fields: [habit_id], references: [id])
+
+  @@unique([habit_id, week_day])
+  @@map("habit_week_day")
+}
+
+model DayHabit {
+  id String @id @default(uuid())
+
+  habit_id String
+  day_id   String
+
+  day   Day   @relation(fields: [day_id], references: [id])
+  habit Habit @relation(fields: [habit_id], references: [id])
+
+  @@unique([habit_id, day_id])
+  @@map("habitsDays")
+}
+
+model Day {
+  id        String     @id @default(uuid())
+  date      DateTime
+  DayHabits DayHabit[]
+
+  @@unique([date])
+  @@map("days")
 }
