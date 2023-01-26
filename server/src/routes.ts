@@ -74,4 +74,27 @@ export async function appRoutes(app : FastifyInstance) {
             completeHabits
         }
     })
+
+    app.delete("/deleteHabit", (request) => {
+
+        const idHabit = z.object({
+            id : z.string()
+        })
+
+        const {id} = idHabit.parse(request.query);
+
+        const deleteHabit = prisma.habit.delete({
+            where : {
+                id : id
+            }, include : {
+                DayHabits : true
+            }
+        })
+
+        return deleteHabit;
+    })
+
+    app.put("/changeStatus", (request) => {
+
+    })
 }
