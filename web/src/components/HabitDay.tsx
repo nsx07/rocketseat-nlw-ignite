@@ -5,9 +5,13 @@ interface HabitProps {
 }
 
 export function HabitDay(props : HabitProps) {
+
+    let color = props.completed <= 3 ?  'bg-zinc-900' : 'bg-violet-500' 
+
+
     return (
-        <div className="w-10 h-10 bg-zinc-900 border-2 rounded-lg border-zinc-800 flex items-center justify-center">
-            {props.completed}
+        <div className={`w-10 h-10 ${color} border-2 rounded-lg border-zinc-800`}>
+            {/* {props.completed} */}
         </div>
     )
 }
