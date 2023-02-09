@@ -37,11 +37,8 @@ export function Habit() {
                 showsVerticalScrollIndicator={false}
                 contentContainerStyle={{paddingBottom : 100}}
                 >
-                <View className="flex-1 flex-row items-center justify-start">
-                    <BackButton />
-                    
-                    <Text className="text-white font-bold text-lg ml-32">Habits</Text>
-                </View>
+                
+                <BackButton />
 
                 <View className="flex-1 flex-row justify-between items-center">
                     <Text className="mt-6 text-zinc-400 font-semibold text-base lowercase">

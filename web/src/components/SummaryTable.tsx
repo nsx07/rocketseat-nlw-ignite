@@ -1,6 +1,16 @@
+import { useEffect, useState } from "react";
+import { api } from "../lib/axios";
 import { generateDatesFromYearBeginning } from "../utils/generate-dates-from-year-beginning";
 import { HabitDay } from "./HabitDay"
 import { v4 as uuidv4 } from 'uuid';
+import dayjs from "dayjs";
+
+interface Summary {
+    id : string
+    date : string
+    amount : number
+    completed : number
+}
 
 export function SummaryTable() {
 
@@ -13,6 +23,17 @@ export function SummaryTable() {
     const rand = () => {
         return Math.random() * 10
     }
+    const [summary, setSummary] = useState<Summary[]>([])
+    
+
+    useEffect(() => {
+        api.get("summary").then(
+            res => {
+                console.log(res.data)
+                setSummary(res.data) 
+            }
+        )
+    }, [])
 
     return (
         <div className="w-full flex ">
@@ -30,8 +51,15 @@ export function SummaryTable() {
             <div className="grid grid-rows-7 grid-flow-col gap-3">
                 
                 {summaryDates.map(date => {
+                    const dayInSummary = summary.find(day => {
+                        return dayjs(date).isSame(day.date, "day")
+                    })
+
                     return (
-                        <HabitDay key={uuidv4()} completed={rand()} amount={10} date={date}/>
+                        <HabitDay key={uuidv4()} 
+                            completed={dayInSummary?.completed} 
+                            amount={dayInSummary?.amount} 
+                            date={date}/>
                     )
                 })}
 

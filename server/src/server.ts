@@ -11,5 +11,6 @@ app.register(cors)
 app.register(appRoutes)
 
 app.listen({
+    host : '192.168.0.67',
     port: 5454
-}).then(_ => console.log("Server Running at localhost:5454"))
+}).then(_ => console.log("Server Running at 192.168.0.67:5454"))
