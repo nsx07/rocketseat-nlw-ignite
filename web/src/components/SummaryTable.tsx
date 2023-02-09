@@ -9,7 +9,10 @@ export function SummaryTable() {
     const summaryDates = generateDatesFromYearBeginning();
     const amountOfDaysToFill = minimunDates - summaryDates.length;
 
-    console.log(summaryDates);
+    // console.log(summaryDates);
+    const rand = () => {
+        return Math.random() * 10
+    }
 
     return (
         <div className="w-full flex ">
@@ -28,7 +31,7 @@ export function SummaryTable() {
                 
                 {summaryDates.map(date => {
                     return (
-                        <HabitDay key={uuidv4()} completed={7}/>
+                        <HabitDay key={uuidv4()} completed={rand()} amount={10} date={date}/>
                     )
                 })}
 
